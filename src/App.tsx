@@ -255,8 +255,8 @@ const LandingPage = () => {
           </div>
           <div className="relative">
             <img 
-              src="/benefits.jpg" 
-              alt="Aerial view of subdivided land plots" 
+              src="/land-lot-lines.jpg" 
+              alt="Aerial land with lot lines" 
               className="rounded-[3rem] shadow-2xl grayscale-[0.2] contrast-[1.1]"
               referrerPolicy="no-referrer"
             />
@@ -465,19 +465,29 @@ const PrivacyPolicy = () => (
       </ul>
       <p><strong className="text-forest">Mobile Info Sharing:</strong> We do not sell, rent, or share mobile phone numbers or SMS consent with third parties or affiliates for marketing or promotional purposes. Mobile information is used solely to provide the services and communications requested by the user.</p>
 
-      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">9. Children’s Privacy</h2>
+      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">9. SMS Communication and Data Use</h2>
+      <p>We may collect personal information such as your name, phone number, email, and property details when you submit information through our website or communicate with us.</p>
+      <p>This information is used to contact you regarding your property, provide offers, and respond to inquiries.</p>
+      <p>By providing your phone number, you consent to receive SMS messages from ACQR Investments. Message frequency may vary. Message and data rates may apply.</p>
+      <p>You can opt out of SMS communications at any time by replying STOP. For assistance, reply HELP.</p>
+      <p>We do not sell, rent, or share your personal information, including phone numbers, with third parties for marketing purposes.</p>
+      <p>We may use cookies and tracking technologies to improve user experience and analyze website traffic.</p>
+      <p>We implement reasonable security measures to protect your information.</p>
+      <p>You may request access, updates, or deletion of your personal information at any time by contacting us.</p>
+
+      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">10. Children’s Privacy</h2>
       <p>Our Service is not directed at individuals under the age of 13, and we do not knowingly collect personal data from children. If you believe a child has provided us with personal information, please contact us immediately for removal.</p>
 
-      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">10. Cookies & Tracking Technologies</h2>
+      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">11. Cookies & Tracking Technologies</h2>
       <p>We use cookies and similar technologies to enhance your experience, analyze site traffic, and improve performance. You can disable cookies in your browser, but certain features of the Service may not function properly.</p>
 
-      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">11. Legal Compliance (GDPR & CCPA)</h2>
+      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">12. Legal Compliance (GDPR & CCPA)</h2>
       <ul className="list-disc pl-6 space-y-3">
         <li><strong className="text-forest">GDPR (EU Residents):</strong> You have rights of access, rectification, erasure, and restriction of processing.</li>
         <li><strong className="text-forest">CCPA (California Residents):</strong> You have the right to know what data we collect, request deletion, and opt out of the sale of personal data (we do not sell personal data).</li>
       </ul>
 
-      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">12. Changes to this Privacy Policy</h2>
+      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">13. Changes to this Privacy Policy</h2>
       <p>We may update this Privacy Policy from time to time. Continued use of our Service after changes indicates acceptance.</p>
     </div>
     <div className="mt-16 pt-10 border-t border-forest/5">
@@ -499,6 +509,14 @@ const TermsOfService = () => (
         Message frequency will vary. ACQR, LLC reserves the right to alter the frequency of messages sent at any time, so as to increase or decrease the total number of sent messages. ACQR, LLC also reserves the right to change the short code or phone number from which messages are sent and we will notify you when we do so. Not all mobile devices or handsets may be supported and our messages may not be deliverable in all areas. ACQR, LLC, its service providers, and the mobile carriers supported by the program are not liable for delayed or undelivered messages. We are able to deliver messages to the following mobile phone carriers: AT&T, Verizon Wireless, Sprint, T-Mobile, and other major national and regional carriers.
       </p>
       
+      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">SMS Messaging Terms</h2>
+      <p>By providing your phone number, you agree to receive SMS messages from ACQR Investments regarding your property and inquiries.</p>
+      <p>Message frequency may vary. Message and data rates may apply.</p>
+      <p>You can opt out at any time by replying STOP. For help, reply HELP or contact us directly.</p>
+      <p>We are not responsible for delays or undelivered messages caused by mobile carriers.</p>
+      <p>You must be at least 18 years old to use our services.</p>
+      <p>For more information, please review our Privacy Policy.</p>
+
       <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">Cancellation</h2>
       <p>
         Text the keywords STOP, END, CANCEL, UNSUBSCRIBE or QUIT to cancel. After texting STOP, END, CANCEL, UNSUBSCRIBE, or QUIT you will receive one additional message confirming that your request has been processed. You acknowledge that our text message platform may not recognize and respond to unsubscribe requests that do not include the STOP, END, CANCEL, UNSUBSCRIBE, or QUIT keyword commands and agree that ACQR, LLC and its service providers will have no liability for failing to honor such requests.
