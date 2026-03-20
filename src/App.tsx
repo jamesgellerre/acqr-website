@@ -12,6 +12,14 @@ const Navbar = () => {
   const location = useLocation();
   const isHome = location.pathname === '/';
 
+  const handleLinkClick = (id: string) => {
+    setIsMenuOpen(false);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
@@ -32,11 +40,11 @@ const Navbar = () => {
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
-          <a href="#how-it-works" className={`text-sm font-medium hover:text-gold transition-colors ${showScrolledStyle ? 'text-forest' : 'text-white'}`}>How It Works</a>
-          <a href="#benefits" className={`text-sm font-medium hover:text-gold transition-colors ${showScrolledStyle ? 'text-forest' : 'text-white'}`}>Why Choose Us</a>
-          <a href="#contact" className="bg-gold hover:bg-gold/90 text-white px-8 py-2.5 rounded-full text-sm font-light italic transition-all tracking-wide shadow-lg shadow-gold/10">
+          <Link to="/#how-it-works" onClick={() => handleLinkClick('how-it-works')} className={`text-sm font-medium hover:text-gold transition-colors ${showScrolledStyle ? 'text-forest' : 'text-white'}`}>How It Works</Link>
+          <Link to="/#benefits" onClick={() => handleLinkClick('benefits')} className={`text-sm font-medium hover:text-gold transition-colors ${showScrolledStyle ? 'text-forest' : 'text-white'}`}>Why Choose Us</Link>
+          <Link to="/#contact" onClick={() => handleLinkClick('contact')} className="bg-gold hover:bg-gold/90 text-white px-8 py-2.5 rounded-full text-sm font-light italic transition-all tracking-wide shadow-lg shadow-gold/10">
             Get My Offer
-          </a>
+          </Link>
         </div>
 
         <button className="md:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -53,9 +61,9 @@ const Navbar = () => {
             exit={{ opacity: 0, y: -20 }}
             className="absolute top-full left-0 w-full bg-white shadow-xl py-8 px-6 flex flex-col gap-6 md:hidden"
           >
-            <a href="#how-it-works" onClick={() => setIsMenuOpen(false)} className="text-lg font-medium text-forest">How It Works</a>
-            <a href="#benefits" onClick={() => setIsMenuOpen(false)} className="text-lg font-medium text-forest">Why Choose Us</a>
-            <a href="#contact" onClick={() => setIsMenuOpen(false)} className="bg-forest text-white text-center py-4 rounded-xl font-light italic">Get My Offer</a>
+            <Link to="/#how-it-works" onClick={() => handleLinkClick('how-it-works')} className="text-lg font-medium text-forest">How It Works</Link>
+            <Link to="/#benefits" onClick={() => handleLinkClick('benefits')} className="text-lg font-medium text-forest">Why Choose Us</Link>
+            <Link to="/#contact" onClick={() => handleLinkClick('contact')} className="bg-forest text-white text-center py-4 rounded-xl font-light italic">Get My Offer</Link>
           </motion.div>
         )}
       </AnimatePresence>
@@ -63,40 +71,49 @@ const Navbar = () => {
   );
 };
 
-const Footer = () => (
-  <footer className="bg-[#0b2114] text-white py-20 px-6">
-    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16">
-      <div>
-        <div className="mb-10 flex justify-center md:justify-start">
-          <Logo variant="light" className="h-24 w-auto" />
+const Footer = () => {
+  const handleLinkClick = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <footer className="bg-[#0b2114] text-white py-20 px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16">
+        <div>
+          <div className="mb-10 flex justify-center md:justify-start">
+            <Logo variant="light" className="h-24 w-auto" />
+          </div>
+          <p className="text-gray-400 text-sm leading-relaxed max-w-xs font-light">
+            Helping land owners across the country sell their property through a seamless, professional process.
+          </p>
         </div>
-        <p className="text-gray-400 text-sm leading-relaxed max-w-xs font-light">
-          Helping land owners across the country sell their property through a seamless, professional process.
-        </p>
+        <div>
+          <h4 className="font-bold mb-8 text-gold uppercase tracking-[0.2em] text-[10px]">Quick Links</h4>
+          <ul className="space-y-4 text-sm text-gray-400 font-light">
+            <li><Link to="/#how-it-works" onClick={() => handleLinkClick('how-it-works')} className="hover:text-gold transition-colors">How It Works</Link></li>
+            <li><Link to="/#benefits" onClick={() => handleLinkClick('benefits')} className="hover:text-gold transition-colors">Why Choose Us</Link></li>
+            <li><Link to="/privacy" className="hover:text-gold transition-colors">Privacy Policy</Link></li>
+            <li><Link to="/terms" className="hover:text-gold transition-colors">Terms of Service</Link></li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-bold mb-8 text-gold uppercase tracking-[0.2em] text-[10px]">Contact</h4>
+          <ul className="space-y-4 text-sm text-gray-400 font-light">
+            <li className="flex items-center gap-3"><Mail size={16} className="text-gold" /> info@acqrinvestments.com</li>
+            <li className="flex items-center gap-3"><MapPin size={16} className="text-gold" /> 3225 McLeod Dr. Suite 100 Las Vegas, NV 89121</li>
+            <li className="flex items-center gap-3"><Phone size={16} className="text-gold" /> 805-826-1749</li>
+          </ul>
+        </div>
       </div>
-      <div>
-        <h4 className="font-bold mb-8 text-gold uppercase tracking-[0.2em] text-[10px]">Quick Links</h4>
-        <ul className="space-y-4 text-sm text-gray-400 font-light">
-          <li><a href="#how-it-works" className="hover:text-gold transition-colors">How It Works</a></li>
-          <li><a href="#benefits" className="hover:text-gold transition-colors">Why Choose Us</a></li>
-          <li><Link to="/privacy" className="hover:text-gold transition-colors">Privacy Policy</Link></li>
-          <li><Link to="/terms" className="hover:text-gold transition-colors">Terms of Service</Link></li>
-        </ul>
+      <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 text-center text-[10px] uppercase tracking-widest text-gray-500">
+        &copy; {new Date().getFullYear()} ACQR, LLC. All rights reserved.
       </div>
-      <div>
-        <h4 className="font-bold mb-8 text-gold uppercase tracking-[0.2em] text-[10px]">Contact</h4>
-        <ul className="space-y-4 text-sm text-gray-400 font-light">
-          <li className="flex items-center gap-3"><Mail size={16} className="text-gold" /> info@acqrinvestments.com</li>
-          <li className="flex items-center gap-3"><MapPin size={16} className="text-gold" /> 3225 McLeod Dr. Suite 100 Las Vegas, NV 89121</li>
-          <li className="flex items-center gap-3"><Phone size={16} className="text-gold" /> 805-826-1749</li>
-        </ul>
-      </div>
-    </div>
-    <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 text-center text-[10px] uppercase tracking-widest text-gray-500">
-      &copy; {new Date().getFullYear()} ACQR, LLC. All rights reserved.
-    </div>
-  </footer>
-);
+    </footer>
+  );
+};
 
 // --- Pages ---
 
@@ -196,9 +213,9 @@ const LandingPage = () => {
               Professional land acquisitions designed for today’s landowners
             </p>
             <div className="flex justify-center">
-              <a href="#contact" className="bg-gold hover:bg-gold/90 text-white px-12 py-5 rounded-full font-light italic text-lg transition-all shadow-xl shadow-gold/20 flex items-center justify-center gap-3 tracking-wide">
+              <Link to="/#contact" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="bg-gold hover:bg-gold/90 text-white px-12 py-5 rounded-full font-light italic text-lg transition-all shadow-xl shadow-gold/20 flex items-center justify-center gap-3 tracking-wide">
                 Get My Offer <ArrowRight size={20} />
-              </a>
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -461,19 +478,33 @@ const PrivacyPolicy = () => (
         <li><strong className="text-forest">Deletion:</strong> Request deletion of your information.</li>
         <li><strong className="text-forest">Opt-Out:</strong> Unsubscribe from marketing communications at any time.</li>
         <li><strong className="text-forest">Data Portability:</strong> Request a copy of your data in a portable format.</li>
-        <li><strong className="text-forest">SMS Opt-In:</strong> By providing your mobile number and opting in, you consent to receive SMS messages from us related to your inquiry, services, or account. Message frequency may vary. Message and data rates may apply. You may opt out at any time by replying STOP. SMS consent is not shared with third parties or affiliates for marketing purposes.</li>
       </ul>
-      <p><strong className="text-forest">Mobile Info Sharing:</strong> We do not sell, rent, or share mobile phone numbers or SMS consent with third parties or affiliates for marketing or promotional purposes. Mobile information is used solely to provide the services and communications requested by the user.</p>
 
-      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">9. SMS Communication and Data Use</h2>
+      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">SMS Communication and Data Use</h2>
       <p>We may collect personal information such as your name, phone number, email, and property details when you submit information through our website or communicate with us.</p>
-      <p>This information is used to contact you regarding your property, provide offers, and respond to inquiries.</p>
-      <p>By providing your phone number, you consent to receive SMS messages from ACQR Investments. Message frequency may vary. Message and data rates may apply.</p>
-      <p>You can opt out of SMS communications at any time by replying STOP. For assistance, reply HELP.</p>
-      <p>We do not sell, rent, or share your personal information, including phone numbers, with third parties for marketing purposes.</p>
-      <p>We may use cookies and tracking technologies to improve user experience and analyze website traffic.</p>
-      <p>We implement reasonable security measures to protect your information.</p>
-      <p>You may request access, updates, or deletion of your personal information at any time by contacting us.</p>
+      
+      <p><strong className="text-forest">How We Use Your Information:</strong><br />
+      We use this information to contact you regarding your property, respond to inquiries, and provide offers.</p>
+      
+      <p><strong className="text-forest">SMS Consent:</strong><br />
+      By providing your phone number through our website form, you expressly consent to receive SMS messages from ACQR Investments regarding your property and related services. Consent is not a condition of purchase.</p>
+      
+      <p>Message frequency may vary. Message and data rates may apply.</p>
+      
+      <p><strong className="text-forest">Opt-Out Instructions:</strong><br />
+      You can opt out at any time by replying STOP. For assistance, reply HELP.</p>
+      
+      <p><strong className="text-forest">No Sharing Policy:</strong><br />
+      We do not sell, rent, or share your personal information, including phone numbers or SMS consent data, with third parties for marketing purposes.</p>
+      
+      <p><strong className="text-forest">Cookies and Tracking:</strong><br />
+      We may use cookies and tracking technologies to improve user experience and analyze website traffic.</p>
+      
+      <p><strong className="text-forest">Data Security:</strong><br />
+      We implement reasonable security measures to protect your information.</p>
+      
+      <p><strong className="text-forest">User Rights:</strong><br />
+      You may request access, updates, or deletion of your personal information by contacting us.</p>
 
       <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">10. Children’s Privacy</h2>
       <p>Our Service is not directed at individuals under the age of 13, and we do not knowingly collect personal data from children. If you believe a child has provided us with personal information, please contact us immediately for removal.</p>
@@ -510,12 +541,39 @@ const TermsOfService = () => (
       </p>
       
       <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">SMS Messaging Terms</h2>
-      <p>By providing your phone number, you agree to receive SMS messages from ACQR Investments regarding your property and inquiries.</p>
-      <p>Message frequency may vary. Message and data rates may apply.</p>
-      <p>You can opt out at any time by replying STOP. For help, reply HELP or contact us directly.</p>
-      <p>We are not responsible for delays or undelivered messages caused by mobile carriers.</p>
-      <p>You must be at least 18 years old to use our services.</p>
-      <p>For more information, please review our Privacy Policy.</p>
+      
+      <p><strong className="text-forest">Program Description:</strong><br />
+      By submitting your information through our website, you agree to receive SMS messages from ACQR Investments related to your property inquiries, offers, and follow-ups.</p>
+      
+      <p><strong className="text-forest">Types of Messages:</strong><br />
+      You may receive messages such as:<br />
+      - Property-related offers<br />
+      - Follow-up messages<br />
+      - Appointment coordination</p>
+      
+      <p><strong className="text-forest">Message Frequency:</strong><br />
+      Message frequency may vary depending on your interaction.</p>
+      
+      <p><strong className="text-forest">Message & Data Rates:</strong><br />
+      Standard message and data rates may apply.</p>
+      
+      <p><strong className="text-forest">Opt-In Method:</strong><br />
+      You opt in by submitting your information through our website form.</p>
+      
+      <p><strong className="text-forest">Opt-Out Instructions:</strong><br />
+      You can opt out at any time by replying STOP.</p>
+      
+      <p><strong className="text-forest">Help:</strong><br />
+      For assistance, reply HELP or contact us at info@acqrinvestments.com.</p>
+      
+      <p><strong className="text-forest">Carrier Disclaimer:</strong><br />
+      We are not responsible for delays or undelivered messages caused by mobile carriers.</p>
+      
+      <p><strong className="text-forest">Age Requirement:</strong><br />
+      You must be at least 18 years old to use our services.</p>
+      
+      <p><strong className="text-forest">Privacy Policy Reference:</strong><br />
+      For more information, please review our Privacy Policy.</p>
 
       <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">Cancellation</h2>
       <p>
@@ -579,10 +637,25 @@ const ThankYouPage = () => (
 );
 
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (hash) {
+      const id = hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        // Fallback for when navigating from another page or if rendering is delayed
+        const timeoutId = setTimeout(() => {
+          const el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+        return () => clearTimeout(timeoutId);
+      }
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
   return null;
 };
 
