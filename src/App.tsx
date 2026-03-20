@@ -431,7 +431,7 @@ const PrivacyPolicy = () => (
         <li><strong className="text-forest">You / User:</strong> Any person or entity that interacts with our Service.</li>
       </ul>
 
-      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">2. Information We Collect</h2>
+      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">Information We Collect</h2>
       <p>We may collect the following information when you use our Service:</p>
       <ul className="list-disc pl-6 space-y-3">
         <li><strong className="text-forest">Contact Information:</strong> Name, phone number, email address.</li>
@@ -441,7 +441,7 @@ const PrivacyPolicy = () => (
         <li><strong className="text-forest">Social Media Data:</strong> Public information you choose to share with us via third-party platforms.</li>
       </ul>
 
-      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">3. How We Use Your Information</h2>
+      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">How We Use Your Information</h2>
       <p>Your information may be used for the following purposes:</p>
       <ul className="list-disc pl-6 space-y-3">
         <li>To provide and personalize our services.</li>
@@ -465,13 +465,13 @@ const PrivacyPolicy = () => (
       <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">5. Data Retention</h2>
       <p>We retain personal data only for as long as necessary to provide our Service and comply with legal obligations. Once no longer required, we securely delete or anonymize the data.</p>
 
-      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">6. Security of Your Information</h2>
+      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">Data Security</h2>
       <p>We use reasonable technical, administrative, and physical safeguards (including SSL encryption and secure servers) to protect your information. However, no system is 100% secure, and we cannot guarantee absolute security.</p>
 
       <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">7. International Data Transfers</h2>
       <p>As a U.S.-based company, your information may be stored or processed in other countries. By using our Service, you consent to such transfers, subject to applicable data protection laws.</p>
 
-      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">8. Your Rights</h2>
+      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">Your Rights</h2>
       <p>Depending on your location, you may have the following rights:</p>
       <ul className="list-disc pl-6 space-y-3">
         <li><strong className="text-forest">Access & Correction:</strong> Request access to or correction of your personal data.</li>
@@ -480,22 +480,17 @@ const PrivacyPolicy = () => (
         <li><strong className="text-forest">Data Portability:</strong> Request a copy of your data in a portable format.</li>
       </ul>
 
-      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">SMS Communication and Data Use</h2>
+      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">SMS Communication and Consent</h2>
       <p>We may collect personal information such as your name, phone number, email, and property details when you submit information through our website or communicate with us.</p>
       
       <p><strong className="text-forest">How We Use Your Information:</strong><br />
       We use this information to contact you regarding your property, respond to inquiries, and provide offers.</p>
       
-      <p><strong className="text-forest">SMS Consent:</strong><br />
-      By providing your phone number through our website form, you expressly consent to receive SMS messages from ACQR Investments regarding your property and related services. Consent is not a condition of purchase.</p>
+      <p>By providing your phone number through our website, you consent to receive SMS messages from ACQR Investments regarding your property inquiry, offers, and follow-ups. Message frequency may vary. Message and data rates may apply.</p>
       
-      <p>Message frequency may vary. Message and data rates may apply.</p>
+      <p>You can opt out at any time by replying STOP. For assistance, reply HELP.</p>
       
-      <p><strong className="text-forest">Opt-Out Instructions:</strong><br />
-      You can opt out at any time by replying STOP. For assistance, reply HELP.</p>
-      
-      <p><strong className="text-forest">No Sharing Policy:</strong><br />
-      We do not sell, rent, or share your personal information, including phone numbers or SMS consent data, with third parties for marketing purposes.</p>
+      <p>We do not sell, rent, or share your personal information, including phone numbers, with third parties for marketing purposes.</p>
       
       <p><strong className="text-forest">Cookies and Tracking:</strong><br />
       We may use cookies and tracking technologies to improve user experience and analyze website traffic.</p>
@@ -509,7 +504,7 @@ const PrivacyPolicy = () => (
       <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">10. Children’s Privacy</h2>
       <p>Our Service is not directed at individuals under the age of 13, and we do not knowingly collect personal data from children. If you believe a child has provided us with personal information, please contact us immediately for removal.</p>
 
-      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">11. Cookies & Tracking Technologies</h2>
+      <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">Cookies and Tracking Technologies</h2>
       <p>We use cookies and similar technologies to enhance your experience, analyze site traffic, and improve performance. You can disable cookies in your browser, but certain features of the Service may not function properly.</p>
 
       <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">12. Legal Compliance (GDPR & CCPA)</h2>
@@ -574,6 +569,8 @@ const TermsOfService = () => (
       
       <p><strong className="text-forest">Privacy Policy Reference:</strong><br />
       For more information, please review our Privacy Policy.</p>
+      
+      <p>For support, contact us at info@acqrinvestments.com</p>
 
       <h2 className="text-3xl font-bold text-forest pt-6 border-b border-forest/5 pb-2">Cancellation</h2>
       <p>
