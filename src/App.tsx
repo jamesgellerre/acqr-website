@@ -486,7 +486,7 @@ const PrivacyPolicy = () => (
       <p><strong className="text-forest">How We Use Your Information:</strong><br />
       We use this information to contact you regarding your property, respond to inquiries, and provide offers.</p>
       
-      <p>By providing your phone number through our website, you consent to receive SMS messages from ACQR Investments regarding your property inquiry, offers, and follow-ups. Message frequency may vary. Message and data rates may apply.</p>
+      <p>By providing your phone number through our website, you consent to receive SMS messages from ACQR Investments regarding your property inquiry, offers, and follow-ups. Consent is not a condition of purchase. You opt in by submitting your information through our website form. Message frequency may vary. Message and data rates may apply.</p>
       
       <p>You can opt out at any time by replying STOP. For assistance, reply HELP.</p>
       
@@ -568,7 +568,7 @@ const TermsOfService = () => (
       You must be at least 18 years old to use our services.</p>
       
       <p><strong className="text-forest">Privacy Policy Reference:</strong><br />
-      For more information, please review our Privacy Policy.</p>
+      For more information, please review our Privacy Policy at https://www.acqrinvestments.com/privacy</p>
       
       <p>For support, contact us at info@acqrinvestments.com</p>
 
