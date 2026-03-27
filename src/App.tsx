@@ -375,7 +375,9 @@ const LandingPage = () => {
                   <Check className="absolute top-1 left-1 text-white opacity-0 peer-checked:opacity-100 transition-opacity" size={16} />
                 </div>
                 <span className="text-[11px] text-gray-500 leading-relaxed font-light italic">
-                  I consent to receive transactional SMS messages (updates, reminders, and conversation) from ACQR, LLC dba ACQR Investments at the number provided. Message frequency varies. Msg & data rates may apply. Reply STOP to opt out.
+                  I Consent to Receive SMS Notifications and Alerts from ACQR, LLC DBA ACQR Investments. Message frequency varies. Message & data rates may apply.<br />
+                  Text HELP to +1 818-515-8391 for assistance.<br />
+                  You can reply STOP to unsubscribe at any time.
                 </span>
               </label>
 
@@ -391,7 +393,8 @@ const LandingPage = () => {
                   <Check className="absolute top-1 left-1 text-white opacity-0 peer-checked:opacity-100 transition-opacity" size={16} />
                 </div>
                 <span className="text-[11px] text-gray-500 leading-relaxed font-light italic">
-                  I consent to receive promotional SMS messages (offers or marketing messages) from ACQR, LLC dba ACQR Investments at the number provided. Consent is not a condition of any purchase. Message frequency varies. Msg & data rates may apply. Reply STOP to opt out.
+                  By checking this box I agree to receive occasional marketing messages from ACQR, LLC DBA ACQR Investments. Message frequency varies. Message & data rates may apply.<br />
+                  Text HELP to +1 818-515-8391 for assistance. You can reply STOP to unsubscribe at any time.
                 </span>
               </label>
 
