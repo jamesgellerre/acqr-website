@@ -5,40 +5,20 @@ interface LogoProps {
   variant?: 'light' | 'dark';
 }
 
-export const Logo: React.FC<LogoProps> = ({ className = "h-12 w-auto", variant = 'dark' }) => {
-  const color = variant === 'light' ? '#FFFFFF' : '#143D24';
-  
+const sources = {
+  light: '/logo-white.png',
+  dark: '/logo-black.png',
+} as const;
+
+export const Logo: React.FC<LogoProps> = ({ className = 'h-12 w-auto', variant = 'dark' }) => {
   return (
-    <svg 
-      viewBox="0 0 960 288" 
-      fill="none" 
-      xmlns="http://www.w3.org/2000/svg" 
-      className={className}
-    >
-      <text 
-        x="50%" 
-        y="168" 
-        textAnchor="middle" 
-        fontFamily="'Montserrat', sans-serif" 
-        fontSize="166" 
-        fontWeight="200" 
-        letterSpacing="0.11664em" 
-        fill={color}
-      >
-        ACQR
-      </text>
-      <text 
-        x="50%" 
-        y="258" 
-        textAnchor="middle" 
-        fontFamily="'Montserrat', sans-serif" 
-        fontSize="34" 
-        fontWeight="200" 
-        letterSpacing="0.49896em" 
-        fill={color}
-      >
-        INVESTMENTS
-      </text>
-    </svg>
+    <img
+      src={sources[variant]}
+      alt="ACQR Investments"
+      width={1400}
+      height={599}
+      className={`block ${className}`}
+      decoding="async"
+    />
   );
 };
