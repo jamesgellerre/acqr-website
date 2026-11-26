@@ -1,8 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, Menu, X, ArrowRight, Shield, FileText, Mail, Phone, MapPin, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { Logo } from './components/Logo';
+
+const SITE_URL = 'https://www.acqrinvestments.com';
+
+function upsertMeta(attr: 'name' | 'property', key: string, content: string) {
+  const selector = `meta[${attr}="${key}"]`;
+  let el = document.head.querySelector(selector);
+  if (!el) {
+    el = document.createElement('meta');
+    el.setAttribute(attr, key);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('content', content);
+}
+
+const PageMeta = ({
+  title,
+  description,
+  path,
+  noindex = false,
+}: {
+  title: string;
+  description: string;
+  path: string;
+  noindex?: boolean;
+}) => {
+  useEffect(() => {
+    document.title = title;
+    const url = `${SITE_URL}${path}`;
+    upsertMeta('name', 'description', description);
+    upsertMeta('property', 'og:title', title);
+    upsertMeta('property', 'og:description', description);
+    upsertMeta('property', 'og:url', url);
+    upsertMeta('name', 'twitter:title', title);
+    upsertMeta('name', 'twitter:description', description);
+    const canonical = document.head.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', url);
+    const robots = document.head.querySelector('meta[name="robots"]');
+    if (noindex) {
+      upsertMeta('name', 'robots', 'noindex');
+    } else if (robots) {
+      robots.remove();
+    }
+  }, [title, description, path, noindex]);
+  return null;
+};
 
 // --- Components ---
 
@@ -87,7 +132,7 @@ const Footer = () => {
             <Logo variant="light" className="h-24 w-auto" />
           </div>
           <p className="text-gray-400 text-sm leading-relaxed max-w-xs font-light">
-            Helping land owners across the country sell their property through a seamless, professional process.
+            Cash offers on vacant and infill lots in select markets. No commissions, and we handle the paperwork.
           </p>
         </div>
         <div>
@@ -102,9 +147,9 @@ const Footer = () => {
         <div>
           <h4 className="font-bold mb-8 text-gold uppercase tracking-[0.2em] text-[10px]">Contact</h4>
           <ul className="space-y-4 text-sm text-gray-400 font-light">
-            <li className="flex items-center gap-3"><Mail size={16} className="text-gold" /> info@acqrinvestments.com</li>
-            <li className="flex items-center gap-3"><MapPin size={16} className="text-gold" /> 3225 McLeod Dr. Suite 100 Las Vegas, NV 89121</li>
-            <li className="flex items-center gap-3"><Phone size={16} className="text-gold" /> 805-826-1749</li>
+            <li className="flex items-center gap-3"><Mail size={16} className="text-gold shrink-0" /> <a href="mailto:info@acqrinvestments.com" className="hover:text-gold transition-colors">info@acqrinvestments.com</a></li>
+            <li className="flex items-center gap-3"><MapPin size={16} className="text-gold shrink-0" /> 3225 McLeod Dr. Suite 100 Las Vegas, NV 89121</li>
+            <li className="flex items-center gap-3"><Phone size={16} className="text-gold shrink-0" /> <a href="tel:+18058261749" className="hover:text-gold transition-colors">805-826-1749</a></li>
           </ul>
         </div>
       </div>
@@ -119,6 +164,8 @@ const Footer = () => {
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const submittingRef = useRef(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -131,6 +178,9 @@ const LandingPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submittingRef.current) return;
+    submittingRef.current = true;
+    setIsSubmitting(true);
     console.log("FORM SUBMIT STARTED");
     
     // Collect form values using FormData as requested
@@ -151,6 +201,8 @@ const LandingPage = () => {
     if (email) payload.email = email;
     if (phone) payload.phone = phone;
     if (propertyInfo) payload.propertyAddress = propertyInfo; // Mapping propertyInfo to propertyAddress
+    payload.transactionalSmsConsent = formData.transactionalConsent;
+    payload.promotionalSmsConsent = formData.promotionalConsent;
 
     console.log("PAYLOAD:", payload);
 
@@ -166,37 +218,38 @@ const LandingPage = () => {
       console.log("WEBHOOK RESPONSE STATUS:", response.status);
 
       if (response.ok) {
-        alert('Your inquiry has been received. Someone from our team will be in touch with you shortly.');
-        // Reset form
-        setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          propertyInfo: '',
-          transactionalConsent: false,
-          promotionalConsent: false
-        });
         navigate('/thank-you');
       } else {
         throw new Error('Failed to submit form');
       }
     } catch (error) {
       console.error('Submission error:', error);
+      submittingRef.current = false;
+      setIsSubmitting(false);
       alert('There was an error submitting your form. Please try again later.');
     }
   };
 
   return (
     <div className="relative">
+      <PageMeta
+        title="Sell Your Land Fast for Cash | ACQR Investments"
+        description="Get a no-commission cash offer for your vacant or infill lot. ACQR Investments handles the paperwork and also sources lots for home builders."
+        path="/"
+      />
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=2000" 
-            alt="Sleek field" 
+            src="/hero-1280.webp"
+            srcSet="/hero-768.webp 768w, /hero-1280.webp 1280w, /hero-1920.webp 1920w"
+            sizes="100vw"
+            alt="Open field at sunrise with the sun low on the horizon"
+            width={1920}
+            height={1080}
+            fetchPriority="high"
+            decoding="async"
             className="w-full h-full object-cover brightness-[0.65]"
-            referrerPolicy="no-referrer"
           />
         </div>
         
@@ -207,10 +260,10 @@ const LandingPage = () => {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-6xl md:text-8xl font-light italic text-white mb-20 leading-[1.1]">
-              Sell Your Land <br /><span className="text-gold">Hassle-Free</span>
+              Sell Your Land <br /><span className="text-gold">for Cash</span>
             </h1>
             <p className="text-xl text-gray-200 mb-16 max-w-2xl mx-auto font-light leading-relaxed italic">
-              Professional land acquisitions designed for today’s landowners
+              No-commission cash offers on vacant and infill lots. We handle the paperwork.
             </p>
             <div className="flex justify-center">
               <Link to="/#contact" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="bg-gold hover:bg-gold/90 text-white px-12 py-5 rounded-full font-light italic text-lg transition-all shadow-xl shadow-gold/20 flex items-center justify-center gap-3 tracking-wide">
@@ -228,19 +281,19 @@ const LandingPage = () => {
       <section id="how-it-works" className="py-32 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-24">
-            <h2 className="text-[10px] uppercase tracking-[0.4em] text-gold font-bold mb-6">The Methodology</h2>
-            <h3 className="text-5xl font-bold text-forest leading-tight">A Refined Approach <br />to Land Acquisition</h3>
+            <p className="text-[10px] uppercase tracking-[0.4em] text-gold font-bold mb-6 font-serif">How It Works</p>
+            <h2 className="text-5xl font-bold text-forest leading-tight">A Cash Offer, <br />Then a Fast Close</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
             {[
-              { step: 'I', title: 'Digital Submission', desc: 'Provide your property details through our secure form below.' },
-              { step: 'II', title: 'Property Review', desc: 'Our team evaluates your property and will reach out if additional details are needed.' },
-              { step: 'III', title: 'Offer & Closing', desc: 'We present a fair, cash offer and handle a smooth, efficient closing process.' }
+              { step: 'I', title: 'Tell Us About the Lot', desc: 'Share the vacant or infill lot: an address, county, or parcel number is enough to start.' },
+              { step: 'II', title: 'Receive a Cash Offer', desc: 'We review the property and follow up with a cash offer. No commissions and no fees.' },
+              { step: 'III', title: 'We Handle the Close', desc: 'If you accept, we take care of the paperwork and work toward a fast, straightforward close.' }
             ].map((item, idx) => (
               <div key={idx} className="relative p-10 rounded-[2.5rem] bg-paper border border-forest/5 hover:border-gold/40 transition-all duration-500 group">
                 <span className="text-7xl font-serif italic text-gold/10 absolute top-6 right-10 group-hover:text-gold/20 transition-colors">{item.step}</span>
-                <h4 className="text-2xl font-bold mb-6 text-forest">{item.title}</h4>
+                <h3 className="text-2xl font-bold mb-6 text-forest">{item.title}</h3>
                 <p className="text-gray-600 leading-relaxed font-light">{item.desc}</p>
               </div>
             ))}
@@ -251,15 +304,15 @@ const LandingPage = () => {
       <section id="benefits" className="py-32 px-6 bg-paper">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
           <div>
-            <h2 className="text-[10px] uppercase tracking-[0.4em] text-gold font-bold mb-6">The Distinction</h2>
-            <h3 className="text-5xl font-bold text-forest mb-10 leading-tight">A Simpler Way <br />to Sell Your Land</h3>
+            <p className="text-[10px] uppercase tracking-[0.4em] text-gold font-bold mb-6 font-serif">Why Sell to ACQR</p>
+            <h2 className="text-5xl font-bold text-forest mb-10 leading-tight">A Straightforward Way <br />to Sell Your Lot</h2>
             <div className="space-y-8">
               {[
-                'Simple and hassle-free process',
+                'Cash offers on vacant and infill lots',
                 'No commissions or hidden fees',
-                'Transparent, fair offers',
-                'Clear communication at every step',
-                'We take care of the paperwork'
+                'We handle the paperwork',
+                'A fast, straightforward closing',
+                'Clear communication along the way'
               ].map((benefit, idx) => (
                 <div key={idx} className="flex items-center gap-6">
                   <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center text-gold">
@@ -272,26 +325,41 @@ const LandingPage = () => {
           </div>
           <div className="relative">
             <img 
-              src="/land-lot-lines.jpg" 
-              alt="Aerial land with lot lines" 
+              src="/land-lot-lines-960.webp"
+              srcSet="/land-lot-lines-640.webp 640w, /land-lot-lines-960.webp 960w, /land-lot-lines-1400.webp 1400w"
+              sizes="(min-width: 1024px) 36rem, calc(100vw - 3rem)"
+              alt="Aerial view of a grassy field divided into vacant lots, beside a road and trees"
+              width={960}
+              height={640}
+              loading="lazy"
+              decoding="async"
               className="rounded-[3rem] shadow-2xl grayscale-[0.2] contrast-[1.1]"
-              referrerPolicy="no-referrer"
             />
             <div className="absolute -bottom-12 -left-12 bg-white p-10 rounded-[2.5rem] shadow-2xl hidden md:block border border-forest/5">
               <div className="flex items-center gap-6">
                 <CheckCircle2 className="text-gold" size={40} />
-                <p className="text-xl font-bold text-forest font-serif italic leading-tight">A Simple, <br />Transparent Process</p>
+                <p className="text-xl font-bold text-forest font-serif italic leading-tight">No Commissions. <br />We Handle the Paperwork.</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
+      <section className="py-24 px-6 bg-[#0b2114] text-white">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-[10px] uppercase tracking-[0.4em] text-gold font-bold mb-6 font-serif">Home Builders</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">Lots for Home Builders</h2>
+          <p className="text-white/80 font-light text-lg leading-relaxed">
+            ACQR also works with home builders, sourcing vacant and infill lots.
+          </p>
+        </div>
+      </section>
+
       <section id="contact" className="py-32 px-6 bg-white">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-5xl font-bold text-forest mb-6">Secure Your Offer</h2>
-            <p className="text-gray-600 font-light italic">Begin your journey towards a seamless property exit.</p>
+            <h2 className="text-5xl font-bold text-forest mb-6">Request a Cash Offer</h2>
+            <p className="text-gray-600 font-light italic">Send your lot details and we will follow up with a cash offer.</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-8 bg-paper p-10 md:p-16 rounded-[3rem] border border-forest/5 shadow-sm">
@@ -338,8 +406,10 @@ const LandingPage = () => {
               <div className="space-y-3">
                 <label className="text-xs uppercase tracking-widest font-bold text-forest/60 ml-1">Phone Number</label>
                 <input 
+                  required
                   name="phone"
                   type="tel" 
+                  autoComplete="tel"
                   placeholder="(555) 000-0000"
                   className="w-full px-8 py-5 rounded-2xl bg-white border border-forest/10 focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none transition-all font-light"
                   value={formData.phone}
@@ -364,15 +434,17 @@ const LandingPage = () => {
             {/* A2P Compliance Checkboxes */}
             <div className="space-y-6 pt-8 border-t border-forest/10">
               <label className="flex items-start gap-4 cursor-pointer group">
-                <div className="relative mt-1">
+                <div className="relative mt-1 h-6 w-6 shrink-0">
                   <input 
-                    type="checkbox" 
-                    className="peer sr-only"
+                    type="checkbox"
+                    name="transactionalConsent"
+                    required
+                    className="peer absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
                     checked={formData.transactionalConsent}
                     onChange={e => setFormData({...formData, transactionalConsent: e.target.checked})}
                   />
                   <div className="w-6 h-6 border-2 border-forest/20 rounded-lg peer-checked:bg-forest peer-checked:border-forest transition-all" />
-                  <Check className="absolute top-1 left-1 text-white opacity-0 peer-checked:opacity-100 transition-opacity" size={16} />
+                  <Check className="pointer-events-none absolute top-1 left-1 text-white opacity-0 peer-checked:opacity-100 transition-opacity" size={16} />
                 </div>
                 <span className="text-[11px] text-gray-500 leading-relaxed font-light italic">
                   I Consent to Receive SMS Notifications and Alerts from ACQR, LLC DBA ACQR Investments. Message frequency varies. Message & data rates may apply.<br />
@@ -382,15 +454,16 @@ const LandingPage = () => {
               </label>
 
               <label className="flex items-start gap-4 cursor-pointer group">
-                <div className="relative mt-1">
+                <div className="relative mt-1 h-6 w-6 shrink-0">
                   <input 
-                    type="checkbox" 
-                    className="peer sr-only"
+                    type="checkbox"
+                    name="promotionalConsent"
+                    className="peer absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
                     checked={formData.promotionalConsent}
                     onChange={e => setFormData({...formData, promotionalConsent: e.target.checked})}
                   />
                   <div className="w-6 h-6 border-2 border-forest/20 rounded-lg peer-checked:bg-forest peer-checked:border-forest transition-all" />
-                  <Check className="absolute top-1 left-1 text-white opacity-0 peer-checked:opacity-100 transition-opacity" size={16} />
+                  <Check className="pointer-events-none absolute top-1 left-1 text-white opacity-0 peer-checked:opacity-100 transition-opacity" size={16} />
                 </div>
                 <span className="text-[11px] text-gray-500 leading-relaxed font-light italic">
                   By checking this box I agree to receive occasional marketing messages from ACQR, LLC DBA ACQR Investments. Message frequency varies. Message & data rates may apply.<br />
@@ -403,8 +476,8 @@ const LandingPage = () => {
               </p>
             </div>
 
-            <button type="submit" className="w-full bg-forest hover:bg-forest/90 text-white py-6 rounded-2xl font-light italic text-lg transition-all shadow-2xl shadow-forest/20">
-              Get My Offer
+            <button type="submit" disabled={isSubmitting} className="w-full bg-forest hover:bg-forest/90 text-white py-6 rounded-2xl font-light italic text-lg transition-all shadow-2xl shadow-forest/20 disabled:opacity-60">
+              {isSubmitting ? 'Sending…' : 'Get My Offer'}
             </button>
           </form>
         </div>
@@ -415,6 +488,11 @@ const LandingPage = () => {
 
 const PrivacyPolicy = () => (
   <div className="pt-32 pb-24 px-6 max-w-4xl mx-auto">
+    <PageMeta
+      title="Privacy Policy | ACQR Investments"
+      description="Privacy Policy for ACQR Investments: how we collect, use, and protect information you submit on acqrinvestments.com."
+      path="/privacy"
+    />
     <h1 className="text-5xl font-bold mb-10 text-forest">Privacy Policy</h1>
     <div className="prose prose-forest max-w-none text-gray-700 space-y-8 font-light leading-relaxed">
       <p className="italic">
@@ -529,6 +607,11 @@ const PrivacyPolicy = () => (
 
 const TermsOfService = () => (
   <div className="pt-32 pb-24 px-6 max-w-4xl mx-auto">
+    <PageMeta
+      title="Terms of Service | ACQR Investments"
+      description="Terms of Service for ACQR Investments, including SMS messaging terms for property inquiries."
+      path="/terms"
+    />
     <h1 className="text-5xl font-bold mb-10 text-forest">Terms of Service</h1>
     <div className="prose prose-forest max-w-none text-gray-700 space-y-8 font-light leading-relaxed">
       <p className="italic">
@@ -613,6 +696,12 @@ const TermsOfService = () => (
 
 const ThankYouPage = () => (
   <div className="min-h-screen flex items-center justify-center px-6 bg-paper">
+    <PageMeta
+      title="Thank You | ACQR Investments"
+      description="Your land offer request was received. Someone from ACQR Investments will be in touch."
+      path="/thank-you"
+      noindex
+    />
     <motion.div 
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
